@@ -8,17 +8,17 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-24.04  # Versão explícita do Ubuntu
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: ["3.12"]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # Atualizado para v4
+        uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5  # Atualizado para v5
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
@@ -31,10 +31,10 @@ jobs:
 
       - name: Run API tests with Behave
         run: |
-          PYTHONPATH=. behave --format progress2 --tags=-wip
+          PYTHONPATH=. behave features/
 
       - name: Upload test reports
-        uses: actions/upload-artifact@v4  # Atualizado para v4
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results-${{ matrix.python-version }}
