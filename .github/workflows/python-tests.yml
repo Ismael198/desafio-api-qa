@@ -31,13 +31,12 @@ jobs:
 
       - name: Run API tests with Behave
         run: |
-          PYTHONPATH=. behave features/
+          mkdir -p reports
+          PYTHONPATH=. behave features/ --format json.pretty --outfile reports/report.json
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results-${{ matrix.python-version }}
-          path: |
-            reports/
-            test-results/
+          path: reports/
